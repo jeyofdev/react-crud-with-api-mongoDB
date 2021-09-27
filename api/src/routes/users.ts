@@ -1,9 +1,14 @@
-import express, { Request, Response } from 'express';
+import express from 'express';
+import {
+    getAllUsers,
+    getUserByName,
+    postUser,
+} from '../controllers/userController';
 
 const router = express.Router();
 
-router.get('/', (req: Request, res: Response) => {
-    res.status(200).json({ message: 'users' });
-});
+router.post('/', postUser);
+router.get('/', getAllUsers);
+router.get('/:name', getUserByName);
 
 export default router;
