@@ -15,3 +15,25 @@ export type SkillType = {
 };
 
 export type UserProps = Omit<UserType, '_id'>;
+
+export type ButtonType = {
+    onClick: () => void;
+    children: string;
+    themeColor: string;
+    margin: string;
+};
+
+export type ButtonIconType = Pick<ButtonType, 'onClick' | 'themeColor'> & {
+    icon: any;
+};
+
+export type ModalType = {
+    children: JSX.Element | string;
+    onClose: () => void;
+};
+
+export type DialogType = {
+    content: string;
+    onCancel: () => void;
+    onConfirmation: () => void;
+};

@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 export const Article = styled.article`
+    position: relative;
     margin: 0 auto;
     padding: 20px;
     border: 1px solid #c9c9c9;
