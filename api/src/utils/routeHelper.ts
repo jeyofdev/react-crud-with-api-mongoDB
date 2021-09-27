@@ -8,7 +8,6 @@ const makeResponse = (
     message?: string
 ) => {
     response.status(statusCode).json({ success, message, result });
-    return null;
 };
 
 export default makeResponse;

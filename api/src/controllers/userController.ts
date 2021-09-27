@@ -23,6 +23,7 @@ export const getAllUsers = async (req: Request, res: Response) => {
 
     if (result.length === 0) {
         makeResponse(res, 404, false, null, 'no users found.');
+        return;
     }
 
     makeResponse(res, 200, true, result);
@@ -38,7 +39,40 @@ export const getUserByName = async (req: Request, res: Response) => {
 
     if (result === null) {
         makeResponse(res, 404, false, null, 'no user found with this name.');
+        return;
     }
 
     makeResponse(res, 200, true, result);
+};
+
+/**
+ * Update user by id
+ */
+export const updateUserById = async (req: Request, res: Response) => {
+    await UserModel.init();
+    const { id } = req.params;
+    const result = await UserModel.updateOne({ _id: id }, req.body);
+
+    if (result.modifiedCount === 0) {
+        makeResponse(res, 404, false, null, 'user does not exist.');
+        return;
+    }
+
+    makeResponse(res, 200, true, result, 'update successfull');
+};
+
+/**
+ * Delete user by id
+ */
+export const deleteUserById = async (req: Request, res: Response) => {
+    await UserModel.init();
+    const { id } = req.params;
+    const result = await UserModel.deleteOne({ _id: id });
+
+    if (result.deletedCount === 0) {
+        makeResponse(res, 404, false, null, 'user does not exist.');
+        return;
+    }
+
+    makeResponse(res, 200, true, result, 'delete successfull');
 };
