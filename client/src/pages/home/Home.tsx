@@ -5,6 +5,7 @@ import { UserType } from '../../types';
 import * as styled from './Home.styled';
 import Loader from '../../atoms/loader/Loader';
 import User from '../../molecules/user/User';
+import { Link } from 'react-router-dom';
 
 const Home = () => {
     const [users, setUsers] = useState<UserType[]>([]);
@@ -50,6 +51,14 @@ const Home = () => {
                     <Loader />
                 )}
             </styled.Section>
+
+            <Link
+                to="/users/create"
+                className="btn-link"
+                style={{ marginTop: '2rem' }}
+            >
+                Add an user
+            </Link>
         </Layout>
     );
 };

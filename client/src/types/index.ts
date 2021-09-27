@@ -1,3 +1,5 @@
+import { ChangeEventHandler } from 'react';
+
 export type LayoutType = {
     children: JSX.Element | any[];
 };
@@ -44,4 +46,18 @@ export type DialogType = {
     content: string;
     onCancel: () => void;
     onConfirmation: () => void;
+};
+
+export type InputType = {
+    label: string;
+    name: string;
+    value: string;
+    onChange: ChangeEventHandler<HTMLInputElement>;
+};
+
+export type TextareaType = Pick<
+    InputType,
+    'label' | 'name' | 'value' | 'onChange'
+> & {
+    rows: number;
 };
