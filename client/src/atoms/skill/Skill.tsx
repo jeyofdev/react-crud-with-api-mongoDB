@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
-import { SkillType } from '../../types';
+import { SkillPropsType } from '../../types';
 import * as styled from './Skill.styled';
 
-const Skill = ({ title, votes }: SkillType) => {
+const Skill = ({ title, votes }: SkillPropsType) => {
     return (
         <styled.Skill>
             {title}

@@ -10,11 +10,19 @@ export type UserType = {
 };
 
 export type SkillType = {
+    _id: string;
     title: string;
     votes: number;
 };
 
-export type UserProps = Omit<UserType, '_id'>;
+export type SkillPropsType = Omit<SkillType, '_id'>;
+
+export type UserProps = Pick<
+    UserType,
+    '_id' | 'name' | 'content' | 'skills'
+> & {
+    onDelete: (userName: string) => void;
+};
 
 export type ButtonType = {
     onClick: () => void;

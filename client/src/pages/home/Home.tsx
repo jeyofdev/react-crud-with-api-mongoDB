@@ -16,6 +16,10 @@ const Home = () => {
         setIsLoading(true);
     };
 
+    const deleteUser = (userName: string) => {
+        setUsers(users.filter((user) => user.name !== userName));
+    };
+
     useEffect(() => {
         fetchUsers();
     }, []);
@@ -30,9 +34,11 @@ const Home = () => {
                         users.map((user) => (
                             <User
                                 key={user._id}
+                                _id={user._id}
                                 name={user.name}
                                 content={user.content}
                                 skills={user.skills}
+                                onDelete={deleteUser}
                             />
                         ))
                     ) : (
