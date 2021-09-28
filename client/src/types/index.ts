@@ -35,6 +35,8 @@ export type ButtonType = {
 
 export type ButtonIconType = Pick<ButtonType, 'onClick' | 'themeColor'> & {
     icon: any;
+    right: string;
+    size: string;
 };
 
 export type ModalType = {
@@ -60,4 +62,8 @@ export type TextareaType = Pick<
     'label' | 'name' | 'value' | 'onChange'
 > & {
     rows: number;
+};
+
+export type FormType = Pick<UserType, '_id' | 'name' | 'content' | 'skills'> & {
+    method: 'post' | 'put';
 };

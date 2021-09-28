@@ -1,4 +1,3 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 import Form from '../../molecules/form/Form';
 import Layout from '../../templates/layout/Layout';
@@ -12,7 +11,7 @@ const Create = () => {
 
             <h2>Add a new user</h2>
 
-            <Form />
+            <Form _id="" name="" content="" skills={[]} method="post" />
         </Layout>
     );
 };

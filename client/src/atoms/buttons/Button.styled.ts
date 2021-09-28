@@ -14,13 +14,16 @@ export const Button = styled.button<{ themeColor: string; margin: string }>`
     cursor: pointer;
 `;
 
-export const ButtonIcon = styled.button<{ themeColor: string }>`
+export const ButtonIcon = styled.button<{
+    themeColor: string;
+    right: string;
+    size: string;
+}>`
     display: flex;
     justify-content: center;
     align-items: center;
     height: 25px;
     width: 25px;
-    font-size: 1rem;
     background-color: ${({ themeColor }) =>
         themeColor === 'success' ? SUCCESS : DANGER};
     color: white;
@@ -28,6 +31,7 @@ export const ButtonIcon = styled.button<{ themeColor: string }>`
     border-radius: 100%;
     position: absolute;
     top: 0.5rem;
-    right: 0.5rem;
+    right: ${({ right }) => right};
+    font-size: ${({ size }) => size ?? '1rem'};
     cursor: pointer;
 `;

@@ -6,10 +6,12 @@ import * as styled from './User.styled';
 import { ButtonIcon } from '../../atoms/buttons/Button';
 import Modal from '../../organisms/modal/Modal';
 import Dialog from '../dialog/Dialog';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faTimes, faPen } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
+import { useHistory } from 'react-router';
 
 const User = ({ _id, name, content, skills, onDelete }: UserProps) => {
+    const history = useHistory();
     const [modalIsOpen, setModalIsOpen] = useState(false);
 
     const handleModalIsOpen = () => {
@@ -33,7 +35,29 @@ const User = ({ _id, name, content, skills, onDelete }: UserProps) => {
             <ButtonIcon
                 themeColor="danger"
                 icon={faTimes}
+                right="0.5rem"
+                size="1rem"
                 onClick={handleModalIsOpen}
+            />
+
+            <ButtonIcon
+                themeColor="success"
+                icon={faPen}
+                right="2.5rem"
+                size="0.75rem"
+                onClick={() =>
+                    history.push({
+                        pathname: `/users/update/${_id}`,
+                        state: {
+                            user: {
+                                _id,
+                                name,
+                                content,
+                                skills,
+                            },
+                        },
+                    })
+                }
             />
 
             <styled.Img
