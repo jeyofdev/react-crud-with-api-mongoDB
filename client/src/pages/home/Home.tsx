@@ -6,8 +6,11 @@ import Loader from '../../atoms/loader/Loader';
 import User from '../../molecules/user/User';
 import { Link } from 'react-router-dom';
 import { getAllUsers } from '../../utils/request';
+import { notifySuccess } from '../../utils/notification';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-const Home = () => {
+const Home = (props: any) => {
     const [users, setUsers] = useState<UserType[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
@@ -16,7 +19,17 @@ const Home = () => {
     };
 
     useEffect(() => {
+        if (props.location.state) {
+            if (
+                props.location.state.notif.type === 'success' ||
+                props.location.state.notif.type === 'error'
+            ) {
+                notifySuccess(props.location.state.notif.message);
+            }
+        }
+
         getAllUsers(setUsers, setIsLoading);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (
@@ -53,6 +66,8 @@ const Home = () => {
             >
                 Add an user
             </Link>
+
+            <ToastContainer position="bottom-right" />
         </Layout>
     );
 };

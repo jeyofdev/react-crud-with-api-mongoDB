@@ -3,12 +3,11 @@ import axios from 'axios';
 import { Input, Textarea } from '../../atoms/form/input/Input';
 import * as styled from './Form.styled';
 import { FormType } from '../../types';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import { postUser, updateUser } from '../../utils/request';
-import { notifyError, notifySuccess } from '../../utils/notification';
+import { useHistory } from 'react-router';
 
 const Form = ({ _id, name, content, skills, method }: FormType) => {
+    const history = useHistory();
     const [currentName, setName] = useState<string>(name ? name : '');
     const [currentContent, setContent] = useState<string>(
         content ? content : ''
@@ -22,18 +21,38 @@ const Form = ({ _id, name, content, skills, method }: FormType) => {
                 await postUser(currentName, currentContent);
                 setName('');
                 setContent('');
-                notifySuccess(
-                    `The user with the name ${currentName} has been added`
-                );
+                history.push({
+                    pathname: '/',
+                    state: {
+                        notif: {
+                            message: `The user with the name ${currentName} has been added`,
+                            type: 'success',
+                        },
+                    },
+                });
             } else if (method === 'put') {
                 await updateUser(_id, currentName, currentContent);
-                notifySuccess(
-                    `The user with the name ${currentName} has been updated`
-                );
+                history.push({
+                    pathname: '/',
+                    state: {
+                        notif: {
+                            message: `The user with the name ${currentName} has been updated`,
+                            type: 'success',
+                        },
+                    },
+                });
             }
         } catch (error) {
             axios.isAxiosError(error) &&
-                notifyError(error.response?.data.result);
+                history.push({
+                    pathname: '/',
+                    state: {
+                        notif: {
+                            message: error.response?.data.result,
+                            type: 'error',
+                        },
+                    },
+                });
         }
     };
 
@@ -66,7 +85,7 @@ const Form = ({ _id, name, content, skills, method }: FormType) => {
                 )}
             </form>
 
-            <ToastContainer position="bottom-right" />
+            {/* <ToastContainer position="bottom-right" /> */}
         </styled.Container>
     );
 };
