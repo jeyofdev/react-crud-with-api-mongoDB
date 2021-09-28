@@ -24,6 +24,7 @@ export type UserProps = Pick<
     '_id' | 'name' | 'content' | 'skills'
 > & {
     onDelete: (userName: string) => void;
+    details?: boolean;
 };
 
 export type ButtonType = {

@@ -12,8 +12,9 @@ import { useHistory } from 'react-router';
 import { SUCCESS, DANGER } from '../../styles/constants.styles';
 import { ToastContainer, toast, ToastContent } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Link } from 'react-router-dom';
 
-const User = ({ _id, name, content, skills, onDelete }: UserProps) => {
+const User = ({ _id, name, content, skills, onDelete, details }: UserProps) => {
     const history = useHistory();
     const [modalIsOpen, setModalIsOpen] = useState(false);
 
@@ -23,8 +24,9 @@ const User = ({ _id, name, content, skills, onDelete }: UserProps) => {
 
     const deleteWilder = async () => {
         try {
-            await axios.delete(`api/users/${_id}`);
+            await axios.delete(`/api/users/${_id}`);
             setModalIsOpen(false);
+
             onDelete(name);
             notifyUserHasBeenDeleted();
         } catch (error) {
@@ -106,6 +108,17 @@ const User = ({ _id, name, content, skills, onDelete }: UserProps) => {
                 </>
             )}
 
+            {!details && (
+                <Link
+                    to={{
+                        pathname: `/users/details/${_id}`,
+                        state: { user: { _id, name, content, skills } },
+                    }}
+                >
+                    Voir plus
+                </Link>
+            )}
+
             {modalIsOpen && (
                 <Modal onClose={handleModalIsOpen}>
                     <Dialog
@@ -125,7 +138,7 @@ User.propTypes = {
     name: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired,
     skills: PropTypes.array.isRequired,
-    onDelete: PropTypes.func.isRequired,
+    onDelete: PropTypes.func,
 };
 
 export default User;
