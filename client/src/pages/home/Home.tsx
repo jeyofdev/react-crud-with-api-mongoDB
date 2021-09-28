@@ -9,14 +9,35 @@ import { getAllUsers } from '../../utils/request';
 import { notifySuccess } from '../../utils/notification';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import SelectInput from '../../atoms/form/select/Select';
+import { filterOptionsDatas } from '../../datas/formDatas';
 
 const Home = (props: any) => {
     const [users, setUsers] = useState<UserType[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [isReload, setIsReload] = useState<boolean>(false);
 
     const deleteUser = (userName: string) => {
         setUsers(users.filter((user) => user.name !== userName));
     };
+
+    const handleChange = (option: any) => {
+        if (option.value === 'name_asc') {
+            const usersFiltered = users.sort((a, b) => {
+                return a.name < b.name ? -1 : 1;
+            });
+            setUsers(usersFiltered);
+        } else if (option.value === 'name_desc') {
+            const usersFiltered = users.sort((a, b) => {
+                return a.name > b.name ? -1 : 1;
+            });
+            setUsers(usersFiltered);
+        }
+
+        setIsReload(!isReload);
+    };
+
+    useEffect(() => {}, [isReload]);
 
     useEffect(() => {
         if (props.location.state) {
@@ -28,13 +49,22 @@ const Home = (props: any) => {
             }
         }
 
-        getAllUsers(setUsers, setIsLoading);
+        if (isLoading) {
+            getAllUsers(setUsers, setIsLoading);
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (
         <Layout>
-            <h2>The users List</h2>
+            <styled.Header>
+                <h2>The users List</h2>
+
+                <SelectInput
+                    options={filterOptionsDatas}
+                    handleChange={handleChange}
+                />
+            </styled.Header>
 
             <styled.Section>
                 {isLoading ? (
