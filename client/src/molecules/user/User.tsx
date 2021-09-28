@@ -9,6 +9,9 @@ import Dialog from '../dialog/Dialog';
 import { faTimes, faPen } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 import { useHistory } from 'react-router';
+import { SUCCESS, DANGER } from '../../styles/constants.styles';
+import { ToastContainer, toast, ToastContent } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const User = ({ _id, name, content, skills, onDelete }: UserProps) => {
     const history = useHistory();
@@ -23,11 +26,30 @@ const User = ({ _id, name, content, skills, onDelete }: UserProps) => {
             await axios.delete(`api/users/${_id}`);
             setModalIsOpen(false);
             onDelete(name);
+            notifyUserHasBeenDeleted();
         } catch (error) {
             if (axios.isAxiosError(error)) {
-                console.log('err');
+                notifyError(error.response?.data.result);
             }
         }
+    };
+
+    const notifyUserHasBeenDeleted = () => {
+        toast.success(`The user with the name ${name} has been deleted`, {
+            theme: 'colored',
+            style: {
+                background: SUCCESS,
+            },
+        });
+    };
+
+    const notifyError = (error: ToastContent) => {
+        toast.error(error, {
+            theme: 'colored',
+            style: {
+                background: DANGER,
+            },
+        });
     };
 
     return (
@@ -93,6 +115,7 @@ const User = ({ _id, name, content, skills, onDelete }: UserProps) => {
                     />
                 </Modal>
             )}
+            <ToastContainer position="bottom-right" />
         </styled.Article>
     );
 };
