@@ -1,7 +1,8 @@
-# wcs react with api mongoDB
+# react with api mongoDB
 
 ## Features
 
+-   ![React](https://img.shields.io/badge/-REACT-black?style=plastic&logo=react)
 -   ![js](https://img.shields.io/badge/-JAVASCRIPT-black?style=plastic&logo=javascript)
 -   ![MongoDB](https://img.shields.io/badge/MONGODB-black?style=plastic&logo=mongodb)
 -   ![NodeJS](https://img.shields.io/badge/NODE.JS-black?style=plastic&logo=node.js)
@@ -71,4 +72,18 @@ Start production server :
 
 ```sh
 $ yarn start
+```
+
+### App Client
+
+Runs the app in the development mode :
+
+```sh
+$ yarn start
+```
+
+Builds the app for production to the `build` folder :
+
+```zsh
+$ yarn build
 ```
