@@ -1,28 +1,22 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 import Layout from '../../templates/layout/Layout';
 import { UserType } from '../../types';
 import * as styled from './Home.styled';
 import Loader from '../../atoms/loader/Loader';
 import User from '../../molecules/user/User';
 import { Link } from 'react-router-dom';
+import { getAllUsers } from '../../utils/request';
 
 const Home = () => {
     const [users, setUsers] = useState<UserType[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
-
-    const fetchUsers = async () => {
-        const response = await axios('/api/users');
-        setUsers(response.data.result);
-        setIsLoading(true);
-    };
 
     const deleteUser = (userName: string) => {
         setUsers(users.filter((user) => user.name !== userName));
     };
 
     useEffect(() => {
-        fetchUsers();
+        getAllUsers(setUsers, setIsLoading);
     }, []);
 
     return (

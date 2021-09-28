@@ -8,6 +8,7 @@ export const Article = styled.article`
     border-radius: 7px;
     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.15);
     margin-bottom: 1rem;
+    text-align: center;
 `;
 
 export const Img = styled.img`

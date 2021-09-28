@@ -9,10 +9,10 @@ import Dialog from '../dialog/Dialog';
 import { faTimes, faPen } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 import { useHistory } from 'react-router';
-import { SUCCESS, DANGER } from '../../styles/constants.styles';
-import { ToastContainer, toast, ToastContent } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Link } from 'react-router-dom';
+import { notifyError, notifySuccess } from '../../utils/notification';
 
 const User = ({ _id, name, content, skills, onDelete, details }: UserProps) => {
     const history = useHistory();
@@ -28,30 +28,12 @@ const User = ({ _id, name, content, skills, onDelete, details }: UserProps) => {
             setModalIsOpen(false);
 
             onDelete(name);
-            notifyUserHasBeenDeleted();
+            notifySuccess(`The user with the name ${name} has been deleted`);
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 notifyError(error.response?.data.result);
             }
         }
-    };
-
-    const notifyUserHasBeenDeleted = () => {
-        toast.success(`The user with the name ${name} has been deleted`, {
-            theme: 'colored',
-            style: {
-                background: SUCCESS,
-            },
-        });
-    };
-
-    const notifyError = (error: ToastContent) => {
-        toast.error(error, {
-            theme: 'colored',
-            style: {
-                background: DANGER,
-            },
-        });
     };
 
     return (
@@ -114,6 +96,7 @@ const User = ({ _id, name, content, skills, onDelete, details }: UserProps) => {
                         pathname: `/users/details/${_id}`,
                         state: { user: { _id, name, content, skills } },
                     }}
+                    className="btn-user-link"
                 >
                     Voir plus
                 </Link>

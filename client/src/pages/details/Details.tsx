@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import User from '../../molecules/user/User';
 import Layout from '../../templates/layout/Layout';
 import * as styled from './Details.styled';
@@ -8,7 +9,9 @@ const Details = (props: any) => {
 
     return (
         <Layout>
-            <h2>The user</h2>
+            <Link to="/" className="btn-link" style={{ margin: '1rem 0 ' }}>
+                Back to home
+            </Link>
 
             <styled.Section>
                 <User
