@@ -22,16 +22,31 @@ const Home = (props: any) => {
     };
 
     const handleChange = (option: any) => {
-        if (option.value === 'name_asc') {
-            const usersFiltered = users.sort((a, b) => {
-                return a.name < b.name ? -1 : 1;
-            });
-            setUsers(usersFiltered);
-        } else if (option.value === 'name_desc') {
-            const usersFiltered = users.sort((a, b) => {
-                return a.name > b.name ? -1 : 1;
-            });
-            setUsers(usersFiltered);
+        switch (option.value) {
+            case 'name_asc':
+                setUsers(
+                    users.sort((a, b) => {
+                        return a.name < b.name ? -1 : 1;
+                    })
+                );
+                break;
+            case 'name_desc':
+                setUsers(
+                    users.sort((a, b) => {
+                        return a.name > b.name ? -1 : 1;
+                    })
+                );
+                break;
+            case 'recently-created':
+                setUsers(
+                    users.sort((a, b) => {
+                        return a._id > b._id ? -1 : 1;
+                    })
+                );
+                break;
+
+            default:
+                break;
         }
 
         setIsReload(!isReload);

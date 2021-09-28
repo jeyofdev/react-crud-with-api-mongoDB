@@ -13,7 +13,9 @@ export const getAllUsers = async (
 
 export const postUser = async (name: string, content: string) => {
     await axios.post('/api/users', {
-        name,
+        name:
+            name.split('').slice(0, 1).join('').toUpperCase() +
+            name.split('').slice(1).join(''),
         content,
     });
 };
@@ -24,7 +26,9 @@ export const updateUser = async (
     content: string
 ) => {
     await axios.put(`/api/users/${_id}`, {
-        name,
+        name:
+            name.split('').slice(0, 1).join('').toUpperCase() +
+            name.split('').slice(1).join(''),
         content,
     });
 };
