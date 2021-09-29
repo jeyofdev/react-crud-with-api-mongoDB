@@ -11,6 +11,16 @@ export const Article = styled.article`
     text-align: center;
 `;
 
+export const Votes = styled.p`
+    position: absolute;
+    top: 0.5rem;
+    right: auto;
+    margin-left: 1.75rem;
+    line-height: 25px;
+    font-size: 1.1rem;
+    color: #757575;
+`;
+
 export const Img = styled.img`
     border-radius: 7px 7px 0 0;
     margin-bottom: 20px;

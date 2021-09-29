@@ -1,6 +1,10 @@
 import * as styled from './Button.styled';
 import PropTypes from 'prop-types';
-import { ButtonIconType, ButtonType } from '../../types';
+import {
+    ButtonIconType,
+    ButtonIconWithoutBackgroundType,
+    ButtonType,
+} from '../../types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export const Button = ({
@@ -16,6 +20,7 @@ export const Button = ({
 
 export const ButtonIcon = ({
     themeColor,
+    color,
     icon,
     right,
     size,
@@ -25,8 +30,9 @@ export const ButtonIcon = ({
         <>
             <styled.ButtonIcon
                 themeColor={themeColor}
+                color={color ?? 'white'}
                 size={size}
-                right={right}
+                right={right ?? 'auto'}
                 onClick={onClick}
             >
                 <FontAwesomeIcon icon={icon} />
@@ -38,6 +44,7 @@ export const ButtonIcon = ({
 Button.propTypes = {
     children: PropTypes.string.isRequired,
     themeColor: PropTypes.string.isRequired,
+    color: PropTypes.string.isRequired,
     margin: PropTypes.string.isRequired,
     icon: PropTypes.any.isRequired,
     size: PropTypes.string.isRequired,

@@ -6,20 +6,27 @@ import * as styled from './User.styled';
 import { ButtonIcon } from '../../atoms/buttons/Button';
 import Modal from '../../organisms/modal/Modal';
 import Dialog from '../dialog/Dialog';
-import { faTimes, faPen } from '@fortawesome/free-solid-svg-icons';
+import { faTimes, faPen, faHeart } from '@fortawesome/free-solid-svg-icons';
+import { faHeart as farHeart } from '@fortawesome/free-regular-svg-icons';
 import axios from 'axios';
 import { useHistory } from 'react-router';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Link } from 'react-router-dom';
 import { notifyError, notifySuccess } from '../../utils/notification';
+import { DANGER, SUCCESS } from '../../styles/constants.styles';
 
 const User = ({ _id, name, content, skills, onDelete, details }: UserProps) => {
     const history = useHistory();
     const [modalIsOpen, setModalIsOpen] = useState(false);
+    const [votes, setVotes] = useState(0);
 
     const handleModalIsOpen = () => {
         setModalIsOpen(!modalIsOpen);
+    };
+
+    const incrementVotes = () => {
+        setVotes(votes + 1);
     };
 
     const deleteWilder = async () => {
@@ -39,7 +46,16 @@ const User = ({ _id, name, content, skills, onDelete, details }: UserProps) => {
     return (
         <styled.Article>
             <ButtonIcon
-                themeColor="danger"
+                themeColor="transparent"
+                color={DANGER}
+                icon={votes > 0 ? faHeart : farHeart}
+                size="1.25rem"
+                onClick={incrementVotes}
+            />
+            <styled.Votes>{votes}</styled.Votes>
+
+            <ButtonIcon
+                themeColor={DANGER}
                 icon={faTimes}
                 right="0.5rem"
                 size="1rem"
@@ -47,7 +63,7 @@ const User = ({ _id, name, content, skills, onDelete, details }: UserProps) => {
             />
 
             <ButtonIcon
-                themeColor="success"
+                themeColor={SUCCESS}
                 icon={faPen}
                 right="2.5rem"
                 size="0.75rem"

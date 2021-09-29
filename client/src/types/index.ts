@@ -36,8 +36,16 @@ export type ButtonType = {
 
 export type ButtonIconType = Pick<ButtonType, 'onClick' | 'themeColor'> & {
     icon: any;
-    right: string;
     size: string;
+    right?: string;
+    color?: string;
+};
+
+export type ButtonIconWithoutBackgroundType = {
+    onClick: () => void;
+    icon: any;
+    size: string;
+    color: string;
 };
 
 export type ModalType = {
