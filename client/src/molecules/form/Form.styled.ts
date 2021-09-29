@@ -6,6 +6,11 @@ export const StatusMessage = styled.span<{ success: boolean }>`
     color: ${({ success }) => (success ? 'green' : 'red')};
 `;
 
+export const Skills = styled.div`
+    display: flex;
+    margin-top: 1rem;
+`;
+
 export const Submit = styled.input`
     padding: 0.5rem;
     margin-top: 1rem;

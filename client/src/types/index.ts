@@ -68,3 +68,10 @@ export type TextareaType = Pick<
 export type FormType = Pick<UserType, '_id' | 'name' | 'content' | 'skills'> & {
     method: 'post' | 'put';
 };
+
+export type CheckboxType = {
+    label: string;
+    name: string;
+    checked: boolean;
+    onChange: (e: any) => void;
+};
