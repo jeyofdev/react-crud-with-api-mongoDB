@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const Skill = styled.li`
+export const Skill = styled.button`
     margin: 4px 0;
     padding: 0.35rem;
     display: flex;
@@ -8,6 +8,8 @@ export const Skill = styled.li`
     border: #f76c6c 1px solid;
     border-radius: 4px;
     line-height: 1;
+    cursor: pointer;
+    color: #757575;
 `;
 
 export const Votes = styled.span<{ children: number }>`

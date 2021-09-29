@@ -1,10 +1,6 @@
 import * as styled from './Button.styled';
 import PropTypes from 'prop-types';
-import {
-    ButtonIconType,
-    ButtonIconWithoutBackgroundType,
-    ButtonType,
-} from '../../types';
+import { ButtonIconType, ButtonType } from '../../types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export const Button = ({
