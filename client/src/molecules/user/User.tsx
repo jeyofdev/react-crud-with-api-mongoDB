@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Skill from '../../atoms/skill/Skill';
 import PropTypes from 'prop-types';
 import { UserProps } from '../../types';
@@ -15,21 +15,41 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Link } from 'react-router-dom';
 import { notifyError, notifySuccess } from '../../utils/notification';
 import { DANGER, SUCCESS } from '../../styles/constants.styles';
+import { updateUser } from '../../utils/request';
 
 const User = ({ _id, name, content, skills, onDelete, details }: UserProps) => {
     const history = useHistory();
     const [modalIsOpen, setModalIsOpen] = useState(false);
-    const [votes, setVotes] = useState(0);
+    const [likes, setLikes] = useState(0);
+    const [userSkills, setUserSkills] = useState(skills);
+    const [reload, setReload] = useState(false);
 
     const handleModalIsOpen = () => {
         setModalIsOpen(!modalIsOpen);
     };
 
-    const incrementVotes = () => {
-        setVotes(votes + 1);
+    const incrementLikes = () => {
+        setLikes(likes + 1);
     };
 
-    const deleteWilder = async () => {
+    const updateSkills = (title: string, vote: number) => {
+        const skillsUpdated = userSkills.map((skill) =>
+            skill.title !== title ? skill : { ...skill, votes: vote }
+        );
+        setUserSkills(skillsUpdated);
+
+        setReload(true);
+    };
+
+    useEffect(() => {
+        if (reload) {
+            updateUser(_id, name, content, userSkills);
+            setReload(false);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userSkills]);
+
+    const deleteUser = async () => {
         try {
             await axios.delete(`/api/users/${_id}`);
             setModalIsOpen(false);
@@ -48,11 +68,11 @@ const User = ({ _id, name, content, skills, onDelete, details }: UserProps) => {
             <ButtonIcon
                 themeColor="transparent"
                 color={DANGER}
-                icon={votes > 0 ? faHeart : farHeart}
+                icon={likes > 0 ? faHeart : farHeart}
                 size="1.25rem"
-                onClick={incrementVotes}
+                onClick={incrementLikes}
             />
-            <styled.Votes>{votes}</styled.Votes>
+            <styled.Votes>{likes}</styled.Votes>
 
             <ButtonIcon
                 themeColor={DANGER}
@@ -90,15 +110,16 @@ const User = ({ _id, name, content, skills, onDelete, details }: UserProps) => {
             <styled.H3>{name}</styled.H3>
             <styled.Paragraph>{content}</styled.Paragraph>
 
-            {skills.length > 0 && (
+            {userSkills.length > 0 && (
                 <>
                     <styled.Ul>
-                        {skills.map((skill) => {
+                        {userSkills.map((skill) => {
                             return (
                                 <Skill
                                     key={skill._id}
                                     title={skill.title}
                                     votes={skill.votes}
+                                    updateSkills={updateSkills}
                                 />
                             );
                         })}
@@ -123,7 +144,7 @@ const User = ({ _id, name, content, skills, onDelete, details }: UserProps) => {
                     <Dialog
                         content={`Êtes vous sûr de vouloir supprimer le wilder '${name}'?`}
                         onCancel={handleModalIsOpen}
-                        onConfirmation={deleteWilder}
+                        onConfirmation={deleteUser}
                     />
                 </Modal>
             )}

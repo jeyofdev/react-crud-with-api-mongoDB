@@ -15,6 +15,7 @@ export type SkillType = {
     _id: string;
     title: string;
     votes: number;
+    updateSkills: (title: string, vote: number) => void;
 };
 
 export type SkillPropsType = Omit<SkillType, '_id'>;
